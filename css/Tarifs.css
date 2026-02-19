@@ -1,0 +1,65 @@
+.img-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-15px); }
+}
+
+.glow-wrapper {
+    position: relative;
+    display: inline-block;
+    border-radius: 20px;
+    padding: 8px;
+}
+
+.glow-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(45deg, rgb(14, 14, 128), #f3f3f3, rgb(14, 14, 128));
+    border-radius: 25px;
+    animation: rotateGlow 4s linear infinite;
+    z-index: -1;
+    filter: blur(8px);
+}
+
+@keyframes rotateGlow {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.badge {
+    background-color: rgb(180, 10, 10);
+}
+
+.nav-link {
+    color: rgb(201, 7, 7);
+    font-size: 20px;
+}
+
+.navbar {
+    background-color: rgba(14, 14, 128, 0.856);
+    padding: 1px;
+}
+
+:root {
+    --primary-blue: #141899;
+    --primary-danger: #e41313;
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-danger) 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover {
+    opacity: 0.85;
+    color: white;
+}

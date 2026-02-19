@@ -1,0 +1,38 @@
+.img-zoom {
+    transition: all 0.4s ease;
+}
+
+.img-zoom:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+    color: rgb(201, 7, 7);
+    font-size: 20px;
+}
+
+.navbar {
+    background-color: rgba(14, 14, 128, 0.856);
+    padding: 1px;
+}
+
+:root {
+    --primary-blue: #141899;
+    --primary-danger: #e41313;
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-danger) 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: bold;
+    transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover {
+    opacity: 0.85;
+    color: white;
+}

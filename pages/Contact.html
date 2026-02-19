@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGILANCE AUTO — Contact</title>
+    <link rel="shortcut icon" href="../images/logo__2_-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-link { color: rgb(201, 7, 7); font-size: 20px; }
+        .navbar { background-color: rgba(14, 14, 128, 0.856); padding: 1px; }
+        :root { --primary-blue: #141899; --primary-danger: #e41313; }
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-danger) 100%);
+            color: #fff; border: none; border-radius: 30px; padding: 10px 25px;
+            font-weight: bold; transition: opacity 0.3s ease;
+        }
+        .btn-gradient:hover { opacity: 0.85; color: #fff; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <img src="../images/logo__2_-removebg-preview.png" alt="logo" width="60" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#NavbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="NavbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="../index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Voitures.html">Voitures</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Tarifs.html">Tarifs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Securite.html">Sécurité</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Location%20%26%20Acc%C3%A8s.html">Location & Accès</a></li>
+                    <li class="nav-item"><a class="btn btn-gradient fw-bold fs-6" href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="Contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 text-danger fw-bold pt-5 text-uppercase">Contactez-nous</h2>
+            <p class="text-center fs-5 mb-5">Besoin d'informations ou d'une réservation ? Contactez-nous dès maintenant.</p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <form class="bg-white p-4 rounded shadow">
+                        <input class="form-control mb-3" placeholder="Nom Complet">
+                        <input class="form-control mb-3" type="email" placeholder="Email">
+                        <input class="form-control mb-3" type="tel" placeholder="Téléphone">
+                        <textarea class="form-control mb-3" placeholder="Message"></textarea>
+                        <a class="btn btn-danger w-100" href="https://wa.me/221770227283">Envoyer</a>
+                    </form>
+                </div>
+                <div class="col-md-6 bg-dark text-white p-4 rounded">
+                    <p>📍 Mbour, Sénégal</p>
+                    <p>📞 +221 77 022 72 83</p>
+                    <p>✉️ gueyedaba9803@gmail.com</p>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5856.292140229939!2d-16.99183644472181!3d14.443740172041021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec18b00284dd7cd%3A0xbf5ce908ecac5b94!2sSaly%20niakh%20niakhal!5e0!3m2!1sen!2ssn!4v1768750580358!5m2!1sen!2ssn"
+                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGILANCE AUTO</title>
+    <link rel="shortcut icon" href="images/logo__2_-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .nav-link {
+            color: rgb(201, 7, 7);
+            font-size: 20px;
+        }
+
+        .navbar {
+            background-color: rgba(14, 14, 128, 0.856);
+            padding: 1px;
+        }
+
+        :root {
+            --primary-blue: #141899;
+            --primary-danger: #e41313;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-danger) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            opacity: 0.85;
+            color: #fff;
+        }
+
+        .img-zoom {
+            transition: all 0.4s ease;
+        }
+
+        .img-zoom:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .img-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .glow-wrapper {
+            position: relative;
+            display: inline-block;
+            border-radius: 20px;
+            padding: 8px;
+        }
+
+        .glow-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(45deg, rgb(14, 14, 128), #f3f3f3, rgb(14, 14, 128));
+            border-radius: 25px;
+            animation: rotateGlow 4s linear infinite;
+            z-index: -1;
+            filter: blur(8px);
+        }
+
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .badge {
+            background-color: rgb(180, 10, 10);
+        }
+
+        .card-glow {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 30px rgba(247, 245, 245, 0.5);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .card-glow:hover {
+            box-shadow: 0 0 25px rgba(253, 253, 255, 0.8), 0 0 50px rgba(47, 0, 255, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            color: #faf3f3;
+            margin: 30px 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .voi {
+            color: #f53c3c;
+            font-weight: bold;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px 15px 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .image-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .gallery-item img {
+                height: 200px;
+            }
+
+            .close {
+                width: 40px;
+                height: 40px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="images/logo__2_-removebg-preview.png" alt="logo" width="60" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#NavbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="NavbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/Voitures.html">Voitures</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/Services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/Tarifs.html">Tarifs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/Securite.html">Sécurité</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./pages/Location%20%26%20Acc%C3%A8s.html">Location &
+                            Accès</a></li>
+                    <li class="nav-item"><a class="btn btn-gradient fw-bold fs-6"
+                            href="./pages/Contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Accueil -->
+    <section id="Accueil" class="vh-100 d-flex align-items-center text-center text-white"
+        style="background: url('images/multi-storey-car-park-1271918_960_720.jpg') center/cover;">
+        <div class="container">
+            <h1 class="fw-bold">VIGILANCE AUTO — Votre véhicule en toute sécurité</h1>
+            <p class="fs-2 fw-bold">Saly / Mbour – Parking sécurisé 24h/24 et 7j/7</p>
+            <a href="./pages/Services.html" class="btn btn-gradient btn-lg mt-3">En savoir plus</a>
+        </div>
+    </section>
+
+    <!-- Voitures -->
+    <section id="Voitures" class="py-5">
+        <h2 class="voi">VOITURES</h2>
+        <p class="text-center fs-5 mb-4">Des véhicules fiables et bien entretenus</p>
+        <div class="gallery">
+            <div class="gallery-item" data-index="0">
+                <img src="images/voiture6.jpg" alt="Range Rover" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Range Rover</div>
+            </div>
+            <div class="gallery-item" data-index="1">
+                <img src="images/photo-1680451553374-09d8d6a1ca58.avif" alt="Mercedes-Benz" loading="lazy"
+                    onclick="openModal(this)">
+                <div class="image-caption">Mercedes-Benz</div>
+            </div>
+            <div class="gallery-item" data-index="2">
+                <img src="images/voiture7.jpg" alt="Range Rover rose" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Range Rover rose</div>
+            </div>
+            <div class="gallery-item" data-index="3">
+                <img src="images/voiture2.jpg" alt="Bugatti Chiron" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Bugatti Chiron</div>
+            </div>
+            <div class="gallery-item" data-index="4">
+                <img src="images/vouture3.jpg" alt="LaFerrari" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">LaFerrari</div>
+            </div>
+            <div class="gallery-item" data-index="5">
+                <img src="images/voiture5.jpg" alt="Chevrolet Blazer" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Chevrolet Blazer</div>
+            </div>
+        </div>
+        <div id="modal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-content-wrapper">
+                <img id="modal-image" class="modal-content" alt="Agrandissement">
+                <div id="modal-caption" class="modal-caption"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="Services" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-danger mb-3 fw-bold text-uppercase">🛠️ Nos Services</h2>
+            <p class="text-center fs-5 mb-5">Des services simples, rapides et sécurisés pour votre tranquillité.</p>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="card h-100 shadow">
+                        <img src="./images/WhatsApp Image 2026-01-07 at 01.05.09.jpeg"
+                            class="card-img-top img-fluid img-zoom rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Surveillance 24/7</h5>
+                            <p class="card-text">Parking couvert et sécurisé <br> en permanence.</p>
+                            <a href="./pages/Contact.html" class="btn btn-danger">Réserver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow">
+                        <img src="./images/WhatsApp Image 2026-01-07 at 01.04.54.jpeg"
+                            class="card-img-top img-fluid img-zoom rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Prise en charge</h5>
+                            <p class="card-text">Dépôt et récupération du véhicule <br> à l'entrée.</p>
+                            <a href="./pages/Contact.html" class="btn btn-danger">Réserver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 shadow">
+                        <img src="./images/WhatsApp Image 2026-01-07 at 01.05.23.jpeg"
+                            class="card-img-top img-fluid img-zoom rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Services +</h5>
+                            <p class="card-text">Lavage auto, recharge électrique, transfert aéroport.</p>
+                            <a href="./pages/Contact.html" class="btn btn-danger">Réserver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tarifs -->
+    <section id="Tarifs" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-danger mb-4 fw-bold text-uppercase">Nos Tarifs</h2>
+            <p class="text-center fs-5 mb-5">Des prix transparents et adaptés à vos besoins</p>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="card shadow p-4 img-float glow-wrapper">
+                        <h4>1 Heure</h4>
+                        <p class="fs-3 fw-bold text-dark">500 FCFA</p>
+                        <a href="./pages/Contact.html" class="btn btn-danger">Choisir</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-4 border-danger img-float glow-wrapper">
+                        <span class="badge mb-2">Le plus choisi</span>
+                        <h4>1 Journée</h4>
+                        <p class="fs-3 fw-bold text-dark">3 000 FCFA</p>
+                        <a href="./pages/Contact.html" class="btn btn-danger">Choisir</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-4 img-float glow-wrapper">
+                        <h4>1 Mois</h4>
+                        <p class="fs-3 fw-bold text-dark">50 000 FCFA</p>
+                        <a href="./pages/Contact.html" class="btn btn-danger">Choisir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sécurité -->
+    <section id="Securite" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-danger mb-3 fw-bold text-uppercase">🎥 Sécurité du Parking</h2>
+            <p class="text-center fs-5 mb-5">Votre véhicule est protégé 24h/24 par des équipements modernes.</p>
+            <div class="row g-4 text-center">
+                <div class="col-md-3">
+                    <div class="card card-glow p-5">
+                        <div class="fs-5">📹</div>
+                        <h5>Vidéosurveillance</h5>
+                        <p>Caméras HD actives jour et nuit.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-glow p-5">
+                        <div class="fs-5">🔒</div>
+                        <h5>Accès sécurisé</h5>
+                        <p>Entrée contrôlée par badge ou code.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-glow p-5">
+                        <div class="fs-5">🚓</div>
+                        <h5>Agents sur place</h5>
+                        <p>Présence humaine pour intervention rapide.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-glow p-5">
+                        <div class="fs-5">💡</div>
+                        <h5>Éclairage permanent</h5>
+                        <p>Visibilité optimale de jour comme de nuit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location & Accès -->
+    <section id="location-acces" class="py-5">
+        <div class="container">
+            <h2 class="text-center text-danger mb-3 fw-bold text-uppercase">♿ Location & Accès</h2>
+            <p class="text-center fs-5 mb-5">Un parking sécurisé, accessible 24h/24 et facile d'accès.</p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="bg-dark text-white p-4 rounded h-100">
+                        <h4>Location de Parking</h4>
+                        <p>Réservez votre place selon vos besoins : courte ou longue durée.</p>
+                        <a href="./pages/Contact.html" class="btn btn-danger">Réserver maintenant</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white p-4 rounded shadow h-100">
+                        <h4>Accès Parking</h4>
+                        <ul class="list-unstyled">
+                            <li>✔ Accès 24h/24</li>
+                            <li>✔ Badge ou code sécurisé</li>
+                            <li>✔ Entrée surveillée</li>
+                            <li>✔ Proche des axes principaux</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="Contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 text-danger fw-bold text-uppercase">Contactez-nous</h2>
+            <p class="text-center fs-5 mb-5">Besoin d'informations ou d'une réservation ? Contactez-nous dès maintenant.
+            </p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <form class="bg-white p-4 rounded shadow">
+                        <input class="form-control mb-3" placeholder="Nom Complet">
+                        <input class="form-control mb-3" type="email" placeholder="Email">
+                        <input class="form-control mb-3" type="tel" placeholder="Téléphone">
+                        <textarea class="form-control mb-3" placeholder="Message"></textarea>
+                        <a class="btn btn-danger w-100" href="https://wa.me/221770227283">Envoyer</a>
+                    </form>
+                </div>
+                <div class="col-md-6 bg-dark text-white p-4 rounded">
+                    <p>📍 Mbour, Sénégal</p>
+                    <p>📞 +221 77 022 72 83</p>
+                    <p>✉️ gueyedaba9803@gmail.com</p>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5856.292140229939!2d-16.99183644472181!3d14.443740172041021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xec18b00284dd7cd%3A0xbf5ce908ecac5b94!2sSaly%20niakh%20niakhal!5e0!3m2!1sen!2ssn!4v1768750580358!5m2!1sen!2ssn"
+                        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <h5 class="fw-bold">VIGILANCE AUTO 🚙</h5>
+                    <p class="small">Chez Vigilance Auto, nous veillons sur votre véhicule comme s'il s'agissait du
+                        nôtre. Parking sécurisé et surveillé 24h/24 et 7j/7.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="fw-bold">Navigation</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none">Accueil</a></li>
+                        <li><a href="./pages/Voitures.html" class="text-white text-decoration-none">Voitures</a></li>
+                        <li><a href="./pages/Services.html" class="text-white text-decoration-none">Nos services</a>
+                        </li>
+                        <li><a href="./pages/Tarifs.html" class="text-white text-decoration-none">Tarifs</a></li>
+                        <li><a href="./pages/Securite.html" class="text-white text-decoration-none">Sécurité</a></li>
+                        <li><a href="./pages/Location%20%26%20Acc%C3%A8s.html"
+                                class="text-white text-decoration-none">Location & Accès</a></li>
+                        <li><a href="./pages/Contact.html" class="text-white text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="fw-bold">Informations</h5>
+                    <p class="mb-1">⏲️ Ouvert 24h/24 – 7j/7</p>
+                    <p class="mb-1">📹 Vidéosurveillance active</p>
+                    <p class="mb-1">📍 Saly / Mbour, Sénégal</p>
+                    <p class="mb-1">📞 +221 77 022 72 83</p>
+                    <p class="mb-1">✉️ gueyedaba9803@gmail.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="fw-bold">Suivez-nous</h5>
+                    <p class="small">Suivez-nous sur nos réseaux pour découvrir nos services et nouveautés.</p>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-outline-light"><img src="./images/face.png" alt="" width="20"
+                                height="20"> Facebook</a>
+                        <a href="#" class="btn btn-outline-light"><img src="./images/images-removebg-preview.png" alt=""
+                                width="20" height="20"> Instagram</a>
+                        <a href="https://wa.me/221770227283" class="btn btn-outline-light"><img
+                                src="./images/téléchargement (1).jpg" alt="" width="20" height="20"> WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center small">© 2026 <strong>VIGILANCE AUTO</strong> — Tous droits réservés</div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openModal(image) {
+            const modal = document.getElementById('modal');
+            const modalImage = document.getElementById('modal-image');
+            const caption = image.closest('.gallery-item').querySelector('.image-caption');
+            modal.style.display = "flex";
+            modalImage.src = image.src;
+            document.getElementById('modal-caption').textContent = caption ? caption.textContent : '';
+        }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGILANCE AUTO — Voitures</title>
+    <link rel="shortcut icon" href="../images/logo__2_-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/Voitures.css">
+    <style>
+        .nav-link {
+            color: rgb(201, 7, 7);
+            font-size: 20px;
+        }
+
+        .navbar {
+            background-color: rgba(14, 14, 128, 0.856);
+            padding: 1px;
+        }
+
+        :root {
+            --primary-blue: #141899;
+            --primary-danger: #e41313;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-danger) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            opacity: 0.85;
+            color: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        .voi {
+            color: #f53c3c;
+            padding-top: 70px;
+            font-weight: bold;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.1);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px 15px 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .image-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 15px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .gallery-item img {
+                height: 200px;
+            }
+
+            .close {
+                width: 40px;
+                height: 40px;
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <img src="../images/logo__2_-removebg-preview.png" alt="logo" width="60" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#NavbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="NavbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="../index.html">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Voitures.html">Voitures</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Tarifs.html">Tarifs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Securite.html">Sécurité</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Location%20%26%20Acc%C3%A8s.html">Location &
+                            Accès</a></li>
+                    <li class="nav-item"><a class="btn btn-gradient fw-bold fs-6" href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="Voitures" class="py-5">
+        <h2 class="voi">VOITURES</h2>
+        <p class="text-center fs-5 mb-4">Des véhicules fiables et bien entretenus</p>
+        <div class="gallery">
+            <div class="gallery-item" data-index="0">
+                <img src="../images/voiture6.jpg" alt="Range Rover" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Range Rover</div>
+            </div>
+            <div class="gallery-item" data-index="1">
+                <img src="../images/photo-1680451553374-09d8d6a1ca58.avif" alt="Mercedes-Benz" loading="lazy"
+                    onclick="openModal(this)">
+                <div class="image-caption">Mercedes-Benz</div>
+            </div>
+            <div class="gallery-item" data-index="2">
+                <img src="../images/voiture7.jpg" alt="Range Rover rose" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Range Rover rose</div>
+            </div>
+            <div class="gallery-item" data-index="3">
+                <img src="../images/voiture2.jpg" alt="Bugatti Chiron" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Bugatti Chiron</div>
+            </div>
+            <div class="gallery-item" data-index="4">
+                <img src="../images/vouture3.jpg" alt="LaFerrari" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">LaFerrari</div>
+            </div>
+            <div class="gallery-item" data-index="5">
+                <img src="../images/voiture5.jpg" alt="Chevrolet Blazer" loading="lazy" onclick="openModal(this)">
+                <div class="image-caption">Chevrolet Blazer</div>
+            </div>
+        </div>
+
+        <!-- Fenêtre modale -->
+        <div id="modal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-content-wrapper">
+                <img id="modal-image" class="modal-content" alt="Agrandissement">
+                <div id="modal-caption" class="modal-caption"></div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function openModal(image) {
+            const modal = document.getElementById('modal')
+            const modalImage = document.getElementById('modal-image');
+            modal.style.display = "flex";
+            modalImage.src = image.src;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none'
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
